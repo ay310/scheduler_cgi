@@ -1,0 +1,33 @@
+],
+
+dayClick: function(date, jsEvent, view) {
+date = date.format()
+   location.href = "new_schedule.rb?inputday="+date;
+},
+
+
+
+eventClick: function(calEvent, jsEvent, view) {
+ location.href = "edit_schedule.rb?id="+calEvent.id;
+}
+});
+});
+</script>
+<script language="JavaScript"><!--
+function mySubmit( place ) {
+　　document.form1.taskid.value = place;
+　　document.form1.submit();
+}
+// --></script>
+<style>
+body {
+margin: 40px 10px;
+padding: 0;
+font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+font-size: 14px;
+}
+#calendar {
+max-width: 100%;
+margin: 0 auto;
+}
+</style>

@@ -1,0 +1,16 @@
+$('#datetimepicker3').datetimepicker({	inline:true});$('#datetimepicker4').datetimepicker();
+
+$('#open').click(function(){
+$('#datetimepicker4').datetimepicker('show',"\n¥n");});
+$('#close').click(function(){	$('#datetimepicker4').datetimepicker('hide',"\n¥n");});
+$('#reset').click(function(){
+$('#datetimepicker4').datetimepicker('reset',"\n¥n");});var dateToDisable = new Date();	dateToDisable.setDate(dateToDisable.getDate() + 2);$('#datetimepicker11').datetimepicker({	beforeShowDay: function(date) {
+  if (date.getMonth() == dateToDisable.getMonth() && date.getDate() == dateToDisable.getDate()) {
+     return [false, ""]
+     }
+     return [true, ""];
+     }});
+
+     $('#datetimepicker_dark').datetimepicker({theme:'dark'})
+
+     </script></html>

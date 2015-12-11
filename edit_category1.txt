@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ja"><head>
+<meta charset="utf-8">
+<title>Scheduler</title>
+<link rel=”shortcut icon” href=”http://mima.c.fun.ac.jp/1012151/img/favicon.ico” />
+<link rel="stylesheet" href="jquery.datetimepicker.css">
+<link rel="stylesheet" href="add_schedule.css?refresh">
+<script src="js/jquery.js"></script>
+<script src="js/jquery.datetimepicker.js"></script>
+<script src="js/build/jquery.datetimepicker.full.js"></script>
+<script language="JavaScript"><!--
+function mySubmit( place ) {
+　　document.form1.taskid.value = place;
+　　document.form1.submit();
+}
+// --></script>
+</head>
+<body>

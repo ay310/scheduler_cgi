@@ -1,0 +1,11 @@
+<div class='box-lid'>
+<div class='box-lid-content'>
+<div id='calendar'></div>
+  </div>
+
+       <div class="lid-wrap">
+  <div class='box-lid-menu'>
+  <div class='box-lid-icon'>TASK</div>
+  <nav>
+    <b>||| Menu</b>
+    <div class='box-lid-menulist'>
