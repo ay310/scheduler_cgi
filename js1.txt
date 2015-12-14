@@ -88,7 +88,7 @@
 				var errorMessage = "[エラー番号: " + errorNo + "]\n" + errorInfo[errorNo];
 
 				// アラート表示
-				alert(errorMessage);
+				//alert(errorMessage);
 
 				// HTMLに書き出し
 				//document.getElementById("result").innerHTML = errorMessage;

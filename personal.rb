@@ -72,5 +72,5 @@ else
   db.execute('update person set sleep_et =?  where id=?', et, "1")
   db.close
   print '<html>\n'
-  print '<head><META http-equiv="refresh"; content="0; URL=/cgi-bin/cal/index.rb"></head><body></body></html>'
+  print '<head><META http-equiv="refresh"; content="0; URL=index.rb"></head><body></body></html>'
 end

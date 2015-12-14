@@ -1,9 +1,61 @@
-<link href='http://mima.c.fun.ac.jp/1012151/js/fullcalendar.css' rel='stylesheet' />
+<link href='http://mima.c.fun.ac.jp/1012151/js/fullcalendar_sp.css' rel='stylesheet' />
 <link rel='stylesheet' type='text/css' href='http://mima.c.fun.ac.jp/1012151/css/box-lid.css?2015-10-20'>
 <link rel='stylesheet' type='text/css' href='http://mima.c.fun.ac.jp/1012151/css/box-lid-nav.css?aaa'>
 <link href='http://mima.c.fun.ac.jp/1012151/js/fullcalendar.print.css' rel='stylesheet' media='print' />
 <link href="http://mima.c.fun.ac.jp/1012151/bootstrap.min.css" rel="stylesheet">
 <link href="http://mima.c.fun.ac.jp/1012151/colorbox.min.css" rel="stylesheet">
+<style type="text/css">
+<!--
+#menu_sp ul{
+margin: 0;
+padding: 0;
+list-style: none;
+}
+#menu_sp li{
+display: inline;
+padding: 0;
+margin: 0;
+float: left;
+}
+#menu_sp li a{
+display: block;
+border-left: 1px solid #474655;
+border-top: 1px solid #474655;
+border-bottom: 1px solid #474655;
+background-color: #fff;
+padding: 3px;
+text-decoration: none;
+color: #333;
+width: 100px;
+margin: 1px 0px;
+text-align: center;
+font-size: 14px;
+}
+#menu_sp li a:hover{
+border-left: 1px solid #474655;
+border-top: 1px solid #474655;
+border-bottom: 1px solid #474655;
+background-color: #F3D898;
+}
+#menu_sp #haji li a{
+display: block;
+border: 1px solid #474655;
+background-color: #fff;
+padding: padding: 3px 10px;;
+text-decoration: none;
+color: #333;
+width: 100px;
+margin: 1px 0px;
+text-align: center;
+font-size: 14px;
+}
+#menu_sp #haji li a:hover{
+display: block;
+border: 1px solid #474655;
+background-color: #F3D898;
+}
+-->
+</style>
 <script src='http://mima.c.fun.ac.jp/1012151/js/lib/moment.min.js'></script>
 <script src='http://mima.c.fun.ac.jp/1012151/js/lib/jquery.min.js'></script>
 <script src='http://mima.c.fun.ac.jp/1012151/js/fullcalendar.min.js'></script>
@@ -88,7 +140,7 @@
 				var errorMessage = "[エラー番号: " + errorNo + "]\n" + errorInfo[errorNo];
 
 				// アラート表示
-				alert(errorMessage);
+				//alert(errorMessage);
 
 				// HTMLに書き出し
 				//document.getElementById("result").innerHTML = errorMessage;
@@ -144,5 +196,5 @@
 							selectHelper: true,
 							editable: true,
 							eventLimit: true, // allow "more" link when too many events
-                 contentHeight: 80%,
+                 contentHeight: 800,
 							events: [

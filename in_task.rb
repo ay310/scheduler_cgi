@@ -22,7 +22,7 @@ end
 print_tx("in_task1.txt")
 print_tx("in_task2.txt")
 
-db = SQLite3::Database.new('/Library/WebServer/CGI-Executables/cal/scheduler.db')
+db = SQLite3::Database.new('scheduler.db')
 i = 0
 num =0
 db.execute('select * from category where t=?', "1") do |_row|

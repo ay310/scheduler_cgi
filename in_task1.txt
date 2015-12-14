@@ -4,7 +4,7 @@
 <link rel="shortcut icon" href="http://mima.c.fun.ac.jp/1012151/img/favicon.ico" />
   <link rel="stylesheet" href="http://mima.c.fun.ac.jp/1012151/jquery.datetimepicker.css">
   <link rel="stylesheet" href="http://mima.c.fun.ac.jp/1012151/css/task.css">
-  <script src="js/jquery.js"></script><script src="http://mima.c.fun.ac.jp/1012151/js/jquery.datetimepicker.js"></script><script src="http://mima.c.fun.ac.jp/1012151/js/build/jquery.datetimepicker.full.js"></script>
+  <script src="http://mima.c.fun.ac.jp/1012151/js/jquery.js"></script><script src="http://mima.c.fun.ac.jp/1012151/js/jquery.datetimepicker.js"></script><script src="http://mima.c.fun.ac.jp/1012151/js/build/jquery.datetimepicker.full.js"></script>
 
   <script language="JavaScript">function mySubmit( place ) {document.form1.allday.value = place;document.form1.submit();}</script>
 

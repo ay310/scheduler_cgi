@@ -335,7 +335,11 @@ end
     null_sleep(sd, ed)
     for i in 0..@inputdays.to_i - 1
       s_day = day
-      e_day = nextday(day)
+      if st.to_i>et.to_i
+        e_day = nextday(day)
+      else
+        e_day=day
+      end
       if search_same('sleep', s_day, st, e_day, et) == 0
         db.execute('insert into schedule  (title, s_day, s_time, e_day, e_time, st) values(?, ?, ?, ?, ?, ?)', 'sleep', s_day, st, e_day, et, 's')
       end
@@ -762,7 +766,7 @@ for i in 0..2
 #  event.eating_t(eat_st[i], eat_et[i])
 end
 # event.overlap_event("2015-11-04", "2015-11-04", "15:00", "17:00")
-event.null_task
+#event.null_task
 
 event.view_event
 print_t('js2.txt')

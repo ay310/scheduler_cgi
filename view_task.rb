@@ -6,7 +6,7 @@ require 'kconv'
 data = CGI.new
 print "Content-type: text/html\n\n"
 
-db = SQLite3::Database.new('/Library/WebServer/CGI-Executables/cal/scheduler.db')
+db = SQLite3::Database.new('scheduler.db')
 db.results_as_hash = true
 sql = 'select * from task'
 $num = 0
@@ -33,13 +33,13 @@ print "\n "
 print '<head> '
 print '<title>Scheduler</title>'
 print "\n "
-print "<link href=\"css/task.css\" rel=\"stylesheet\">"
+print "<link href=\"http://mima.c.fun.ac.jp/1012151/css/task.css\" rel=\"stylesheet\">"
 print '</head> '
 print "\n "
 print '<body>'
 print '<div id="left-side" style="float:left;">'
 print "\n "
-print "<form action=\"/cgi-bin/cal/edit_task.rb\" method=\"post\">\n "
+print "<form action=\"edit_task.rb\" method=\"post\">\n "
  $i=0
 db.execute(sql) do |row|
   $id[$i] = row['id'].to_s
@@ -83,7 +83,7 @@ end
 print '<div id="right-side" style="float:right;">'
 # カテゴリ追加メニュー
 print 'カテゴリの追加：'
-print "<form action=\"/cgi-bin/cal/edit_task.rb\" method=\"post\">\n "
+print "<form action=\"edit_task.rb\" method=\"post\">\n "
 print "  <input type=\"text\" name=\"new_category\" size=\"20\" value=\"新規カテゴリ名\">\n  "
 print "   <input type=\"submit\" value=\"追加\"  onclick=\"window.close()\" class=\"btn\"></p>\n  "
 print ' </form> '
@@ -91,7 +91,7 @@ print ' </form> '
 # カテゴリ削除メニュー
 print 'カテゴリの削除：'
 print "\n "
-print "<form action=\"/cgi-bin/cal/edit_task.rb\" method=\"post\"> \n "
+print "<form action=\"edit_task.rb\" method=\"post\"> \n "
 print "  <select name=\"del_category\">\n  "
 $c_name = Array.new($num)
 $i = 0
@@ -110,7 +110,7 @@ print "<input type=\"submit\" value=\"削除\"  onclick=\"window.close()\" class
 print '  </form>'
 print "\n "
 
-print "<a href=\"/cgi-bin/cal/index.rb\">もどる</a>\n "
+print "<a href=\"index.rb\">もどる</a>\n "
 print "</div>\n"
 print '</body></html>'
 print "\n "

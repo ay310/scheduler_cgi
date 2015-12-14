@@ -700,5 +700,7 @@ event.null_task
 event.view_event
 print_t('sp_js2.txt')
 print '</head>'
-print "<body onLoad=\"sendgps()\"><div id=\'calendar\'></div>"
+print "<body onLoad=\"sendgps()\">"
+print_t('index_menu_sp.txt')
+print "<hr><div id=\'calendar\'></div>"
 print '</body></html>'

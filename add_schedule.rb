@@ -92,7 +92,7 @@ def input_def(name, sday)
   $category=row[6].to_s
   end
   print_t('new_schedule1.txt')
-  print "<form action=\"/cgi-bin/cal/add_schedule.rb\" method=\"post\">"
+  print "<form action=\"add_schedule.rb\" method=\"post\">"
   print "<label>件名：</label>"
   print "<input type=\"text\" name=\"content\" size=\"20\" value=\""
   print name
@@ -128,7 +128,7 @@ end
 def new_category(id, title, sd, ed, st, et)
   #新規カテゴリ作成が選択された場合
   print_t('new_schedule1.txt')
-     print "<form action=\"/cgi-bin/cal/add_schedule.rb\" method=\"post\">"
+     print "<form action=\"add_schedule.rb\" method=\"post\">"
      if id!=""
        print "<input type=\"hidden\" name=\"id\" value=\""
        print id

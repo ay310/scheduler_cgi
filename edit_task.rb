@@ -26,7 +26,7 @@ new_category = data['new_category'].to_s.toutf8
 del_category = data['del_category']
 #既存のタスク編集
 t_id = data['taskid'].to_s.toutf8
-db = SQLite3::Database.new('/Library/WebServer/CGI-Executables/cal/scheduler.db')
+db = SQLite3::Database.new('scheduler.db')
 db.results_as_hash = true
 if t_id == ''
  #既存のタスクの編集じゃない時
@@ -81,7 +81,7 @@ else
   end
   print " <div align=\"center\"><p>タスク入力</p></div>\n "
   print "<br><br><div id = \"main\" style=\"float:left;\">\n "
-  print "<form action=\"/cgi-bin/cal/add_task.rb"
+  print "<form action=\"add_task.rb"
   print"\" method=\"post\">\n "
   print "<input type=\"hidden\" name=\"t_id\" value=\""
   print $id[$t_num]
@@ -152,7 +152,7 @@ else
   print "<input type=\"submit\" value=\"OK\"  onclick=\"window.close()\" class=\"btn\">"
   print '</p></form></div><br>'
   print "<div id = \"buttom\" align=\"right\" style=\"clear:both;\"></div>"
-  print "<form action=\"/cgi-bin/cal/add_task.rb"
+  print "<form action=\"add_task.rb"
   print"\" method=\"post\">\n "
   print "<input type=\"hidden\" name=\"del\" value=\""
   print $id[$t_num]
