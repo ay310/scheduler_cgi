@@ -260,6 +260,7 @@ read_schedule
 printf("<html>")
 printf("<head>")
 printf("<title>feedback</title>")
+printf("<link rel=\"shortcut icon\" href=\"http://mima.c.fun.ac.jp/1012151/css/feedback.css\" /></head>")
 printf("<link rel=\"shortcut icon\" href=\"http://mima.c.fun.ac.jp/1012151/img/favicon.ico\" /></head>")
 printf("<body>")
 printf("<h1>%s〜%sのフィードバック</h1>\n",startday, endday)

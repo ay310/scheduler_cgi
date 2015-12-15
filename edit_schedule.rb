@@ -6,14 +6,15 @@ require 'kconv'
 data = CGI.new
 
 id = data['id'].to_i
+
 def count(f_name)
-  txt = open(f_name, 'r:utf-8')
+  txt = open('../'+f_name, 'r:utf-8')
   t_count = txt.read.count("\n")
   t_count.to_i
 end
 
 def print_t(f_name)
-  txt = File.open(f_name, 'r:utf-8').readlines
+  txt = File.open("../"+f_name, 'r:utf-8').readlines
   for i in 0..count(f_name) - 1
     print txt[i].to_s
   end
@@ -65,15 +66,15 @@ if $st != 's'
   print "\">\n"
   print '  <p><label>件名：</label> '
   print "\n"
-  print "  <input type=\"text\" name=\"title\" size=\"20\" value=\""
+  print "  <input type=\"text\" name=\"title\"  style=\"width: 60%; height: 1.5em;\" value=\""
   print $title
   print "\"></p>\n"
   print '    <label>作業時間：</label>'
   print "\n"
-  print "  <input id=\"cals_time\" type=\"text\" name=\"cals_time\" value=\""
+  print "  <input id=\"cals_time\" type=\"text\"  style=\"width: 60%; height: 1.5em;\" name=\"cals_time\" value=\""
   print $s_time
   print "\">〜"
-  print "  <input id=\"cale_time\" type=\"text\" name=\"cale_time\" value=\""
+  print "  <input id=\"cale_time\" type=\"text\"  style=\"width: 60%; height: 1.5em;\" name=\"cale_time\" value=\""
   print $e_time
   print "\">\n"
   print ' <p>'
@@ -88,7 +89,7 @@ if $st != 's'
   # print  $about[$t_num]
   print "\"></textarea><br>\n"
   print "<div align=\"right\"><input type=\"submit\" value=\"OK\"  onclick=\"window.close()\" class=\"btn_submit\">"
-  print '</div></form></div><br>;\n'
+  print '</div></form></div><br>'
   print "<div id = \"buttom\" align=\"right\" style=\"clear:both;\"></div>\n"
   print '</div></div>'
   print_t('in_task3.txt')
@@ -139,7 +140,7 @@ elsif $st == 's'
   print id
   print "\">"
   print ' <label>件名：</label>' + "\n"
-  print "<input type=\"text\" name=\"content\" size=\"20\" value=\""
+  print "<input type=\"text\" name=\"content\"  style=\"width: 60%; height: 1.5em;\" value=\""
   print $title
   print '"><br>' + "\n"
   print '<label>開始：</label>' + "\n"

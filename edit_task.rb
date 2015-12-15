@@ -7,14 +7,14 @@ data = CGI.new
 print "Content-type: text/html\n\n"
 
 def count(f_name)
-  txt = open(f_name, 'r:utf-8')
+  txt = open('../'+f_name, 'r:utf-8')
   t_count = txt.read.count("\n")
   t_count.to_i
 end
 
 def print_t(f_name)
-  txt = File.open(f_name, 'r:utf-8').readlines
-  for i in 0..count(f_name)-1
+  txt = File.open("../"+f_name, 'r:utf-8').readlines
+  for i in 0..count(f_name) - 1
     print txt[i].to_s
   end
 end
@@ -131,17 +131,17 @@ else
   if $im[$t_num]=="1"
   print  " checked=\"checked\""
   end
-  print "><br>1</li>"
+  print "><br>★・・</li>"
   print "<li><input type=\"radio\" name=\"importance\" value=\"2\""
   if $im[$t_num]="2"
   print  " checked=\"checked\""
   end
-  print "><br>2</li>"
+  print "><br>★★・</li>"
   print "<li><input type=\"radio\" name=\"importance\" value=\"3\""
   if $im[$t_num]=="3"
   print  " checked=\"checked\""
   end
-  print "><br>3</li>"
+  print "><br>★★★</li>"
   print "</ul></div>"
   print '  <label>内容：</label>'
     print "\n"

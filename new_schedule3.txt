@@ -1,6 +1,0 @@
-<label>開始：</label>
-<input id="s_day" type="text" name="s_day">
-<input id="s_time" type="text" name="s_time">
-<br><label>終了：</label>
-<input id="e_day" type="text" name="e_day">
-<input id="e_time" type="text" name="e_time">

@@ -8,14 +8,14 @@ data = CGI.new
 print "Content-type: text/html\n\n"
 
 def count(f_name)
-  txt = open(f_name, "r:utf-8")
+  txt = open('../'+f_name, 'r:utf-8')
   t_count = txt.read.count("\n")
-  return t_count.to_i-1
+  t_count.to_i
 end
 
 def print_tx(f_name)
-  txt = File.open(f_name, 'r:utf-8').readlines
-  for i in 0..count(f_name)
+  txt = File.open("../"+f_name, 'r:utf-8').readlines
+  for i in 0..count(f_name) - 1
     print txt[i].to_s
   end
 end
@@ -39,13 +39,13 @@ db.execute('select * from category where t=?', "1") do |row|
 end
 print "<option value=\"no_name\">新規作成</option>"
 print '  </select>'
-print "<div class=\"hoge\">"
-print "<ul><li><input type=\"radio\" name=\"importance\" value=\"1\"><br>1</li>"
-print "<li><input type=\"radio\" name=\"importance\" value=\"2\" checked=\"checked\"><br>2</li>"
-print "<li><input type=\"radio\" name=\"importance\" value=\"3\"><br>3</li>"
-print "</ul></div>"
+print "<div class=\"hoge\"><label>重要度</label><br>"
+print "<ul><li><input type=\"radio\" name=\"importance\" value=\"1\"><br>★・・</li>"
+print "<li><input type=\"radio\" name=\"importance\" value=\"2\" checked=\"checked\"><br>★★・</li>"
+print "<li><input type=\"radio\" name=\"importance\" value=\"3\"><br>★★★</li>"
+print "</ul></div><br>"
 print "  <label>内容：</label>"
-print " <input type=\"text\" name=\"about\" size=\"20\" value=\"about\"><br>"
+print " <input type=\"text\" name=\"about\"style=\"width: 60%; height: 2.0em;\" value=\"about\"><br>"
 print "    <input type=\"submit\" value=\"送信\"  onclick=\"window.close()\" class=\"btn\">"
 print "</p></form></div>"
 print "<div id=\"allday\" style=\"float:right;\"></div><br>"

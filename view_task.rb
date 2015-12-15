@@ -79,8 +79,6 @@ db.execute(sql) do |row|
   $num += 1
 end
   print '<br><br>'
-  print "</div>\n"
-print '<div id="right-side" style="float:right;">'
 # カテゴリ追加メニュー
 print 'カテゴリの追加：'
 print "<form action=\"edit_task.rb\" method=\"post\">\n "

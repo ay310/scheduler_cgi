@@ -17,18 +17,21 @@ e_time = '24:00' if e_time == ''
 
 #規定文を作成する時以下を利用する
 search_title = data['s_title'].to_s.toutf8
+new_def = data['new_def'].to_s.toutf8
 #削除時以下にidが添付される
 del = data['del'].to_s.toutf8
 
+
+
 def count(f_name)
-  txt = open(f_name, 'r:utf-8')
+  txt = open('../'+f_name, 'r:utf-8')
   t_count = txt.read.count("\n")
-  t_count.to_i - 1
+  t_count.to_i
 end
 
 def print_t(f_name)
-  txt = File.open(f_name, 'r:utf-8').readlines
-  for i in 0..count(f_name)
+  txt = File.open("../"+f_name, 'r:utf-8').readlines
+  for i in 0..count(f_name) - 1
     print txt[i].to_s
   end
 end
@@ -84,6 +87,7 @@ def picker(sd,ed,st,et)
 end
 
 def input_def(name, sday)
+  #新規定形スケジュールの時の表示
   db = SQLite3::Database.new('scheduler.db')
   db.results_as_hash = true
   db.execute('select * from defalt_s where title=?', name) do |row|
@@ -93,8 +97,13 @@ def input_def(name, sday)
   end
   print_t('new_schedule1.txt')
   print "<form action=\"add_schedule.rb\" method=\"post\">"
+  if name.to_s=="no_name"
+    print "<input type=\"hidden\" name=\"new_def\" value=\""
+    print "add"
+    print "\">"
+  end
   print "<label>件名：</label>"
-  print "<input type=\"text\" name=\"content\" size=\"20\" value=\""
+  print "<input type=\"text\" name=\"content\" style=\"width: 60%; height: 1.5em;\" value=\""
   print name
   print "\">"
   print "<br>"
@@ -125,6 +134,51 @@ def input_def(name, sday)
   db.close
 end
 
+def input_taskschedule(name, sday)
+  #新規タスクのスケジュールの場合
+  db = SQLite3::Database.new('scheduler.db')
+  db.results_as_hash = true
+  db.execute('select * from task where title=?', name) do |row|
+  $id=row[0].to_s
+  $category=row[6].to_s
+  end
+  print_t('new_schedule1.txt')
+  print "<form action=\"add_schedule.rb\" method=\"post\">"
+  print "<input type=\"hidden\" name=\"t_id\" value=\""
+  print $id
+  print "\">"
+  print "<label>件名：</label>"
+  print "<input type=\"text\" name=\"content\"  style=\"width: 60%; height: 1.5em;\" value=\""
+  print name
+  print "\">"
+  print "<br>"
+  print_t('new_schedule3.txt')
+  print '<p><label>カテゴリ：</label>'
+  print '<select name="category">'
+  i=0
+  num=0
+  db.execute('select * from category where s=?', "1") do |row|
+    num += 1
+  end
+  c_name = Array.new(num)
+  db.execute('select * from category where s=?', "1") do |row|
+    c_name[i] = row[0]
+    print "<option value=\"#{c_name[i].to_s.chomp}\""
+    if c_name[i]==$category
+      print "selected"
+    end
+    print ">#{c_name[i].to_s.chomp}</option>"
+    i += 1
+  end
+  print "</select></p>"
+  print "<p><input type=\"submit\" value=\"送信\"  onclick=\"window.close()\" class=\"btn\"></p>"
+  print '</form></div></div></div></body>'
+  print_t('new_schedule4.txt')
+  picker(sday, sday, $st, $et)
+  print_t('new_schedule5.txt')
+  db.close
+end
+
 def new_category(id, title, sd, ed, st, et)
   #新規カテゴリ作成が選択された場合
   print_t('new_schedule1.txt')
@@ -135,13 +189,13 @@ def new_category(id, title, sd, ed, st, et)
        print "\">"
      end
        print "<label>件名：</label>"
-       print "<input type=\"text\" name=\"content\" size=\"20\" value=\""
+       print "<input type=\"text\" name=\"content\"  style=\"width: 60%; height: 1.5em;\" value=\""
        print title
        print "\">"
        print "<br>"
   print_t('new_schedule3.txt')
   print '<p><label>カテゴリ：</label>'
- print "<input type=\"text\" name=\"category\" size=\"20\" value=\"新規カテゴリ名\"><br>"
+ print "<input type=\"text\" name=\"category\"  style=\"width: 60%; height: 1.5em;\" value=\"新規カテゴリ名\"><br>"
   print "<p><input type=\"submit\" value=\"送信\"  onclick=\"window.close()\" class=\"btn\"></p>"
   print '</form></div></div></div></body>'
   print_t('new_schedule4.txt')
@@ -183,6 +237,12 @@ def edit_db_schedule(id, title, sd, ed, st, et, category)
   return_index
 end
 
+def add_def(title, st, et, category)
+  db = SQLite3::Database.new('scheduler.db')
+  db.results_as_hash = true
+        db.execute('insert into defalt_s  (title, s_time, e_time, category) values(?, ?, ?, ?)', title, st, et, category)
+    db.close
+end
 def add_db_schedule(title, sd, ed, st, et, category)
   #新規スケジュール作成
   db = SQLite3::Database.new('scheduler.db')
@@ -195,6 +255,8 @@ end
 if del != ''
   # 削除ボタンが選択された時
   del_schedule(del)
+elsif t_title!="" && task!=""
+    input_taskschedule(t_title, s_day)
 elsif search_title != ""
   # 定型文から選択された時
   input_def(search_title, s_day)
@@ -207,6 +269,9 @@ else
   if id!=""
     edit_db_schedule(id, title, s_day, e_day, s_time, e_time, category)
   else
+    if new_def!=""
+      add_def(title, s_time, e_time, category)
+    end
     add_db_schedule(title, s_day, e_day, s_time, e_time, category)
   end
 end

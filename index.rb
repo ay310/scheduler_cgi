@@ -35,13 +35,13 @@ def chint(s_data)
 end
 
 def count(f_name)
-  txt = open(f_name, 'r:utf-8')
+  txt = open('../'+f_name, 'r:utf-8')
   t_count = txt.read.count("\n")
   t_count.to_i
 end
 
 def print_t(f_name)
-  txt = File.open(f_name, 'r:utf-8').readlines
+  txt = File.open("../"+f_name, 'r:utf-8').readlines
   for i in 0..count(f_name) - 1
     print txt[i].to_s
   end
@@ -306,12 +306,14 @@ end
     decide_e_schedule(ed)
     e_num=@num_i
     #printf("test: sd%s, ed%s, s_num%s e_num%s\n", sd, ed, s_num, e_num)
-    for i in s_num..e_num
-      if @title[i]=="sleep"
-        #printf("test: sleep is %s\n", @s_day[i])
-        db = SQLite3::Database.new('scheduler.db')
-          db.execute('delete from schedule where id=?', @id[i])
-        db.close
+    if s_num.to_i>1 && e_num.to_i>1
+      for i in s_num..e_num
+        if @title[i]=="sleep"
+          #printf("test: sleep is %s\n", @s_day[i])
+          db = SQLite3::Database.new('scheduler.db')
+            db.execute('delete from schedule where id=?', @id[i])
+          db.close
+        end
       end
     end
   end
@@ -528,7 +530,7 @@ end
               elsif @category[s]==nil
                 b_time=to_min(@s_time[s+1]).to_i-to_min(@e_time[s]).to_i
                 #printf("524 / b_time is %s\n", b_time)
-                task_add_time(@s_time[s+1], @e_time[s], b_time, $resttime, c, checkday, i, "0")
+                task_add_time(@s_time[s+1], @e_time[s], b_time, $resttime, c, checkday, i, "sleep")
                 s=s+1
               else
                 s=s+1
@@ -766,7 +768,7 @@ for i in 0..2
 #  event.eating_t(eat_st[i], eat_et[i])
 end
 # event.overlap_event("2015-11-04", "2015-11-04", "15:00", "17:00")
-#event.null_task
+event.null_task
 
 event.view_event
 print_t('js2.txt')

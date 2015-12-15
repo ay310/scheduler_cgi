@@ -7,14 +7,14 @@ print "Content-type: text/html\n\n"
 inputday = data["inputday"].to_s
 
 def count(f_name)
-  txt = open(f_name, "r:utf-8")
+  txt = open('../'+f_name, 'r:utf-8')
   t_count = txt.read.count("\n")
-  return t_count.to_i-1
+  t_count.to_i
 end
 
 def print_t(f_name)
-  txt = File.open(f_name, 'r:utf-8').readlines
-  for i in 0..count(f_name)
+  txt = File.open("../"+f_name, 'r:utf-8').readlines
+  for i in 0..count(f_name) - 1
     print txt[i].to_s
   end
 end
@@ -64,27 +64,11 @@ et=decide_et(st).to_s
 db = SQLite3::Database.new('scheduler.db')
 db.results_as_hash = true
 print_t("new_schedule.txt")
-print '<p><label>カテゴリ：</label>'
-print '<select name="category">'
-num=0
-db.execute('select * from category where s=?', "1") do |row|
-  num += 1
-end
-c_name = Array.new(num)
-i=0
-db.execute('select * from category where s=?', "1") do |row|
-  c_name[i] = row[0]
-  print "<option value=\"#{c_name[i].to_s.chomp}\">#{c_name[i].to_s.chomp}</option>"
-  i += 1
-end
-print "<option value=\"no_name\">新規作成</option></select></p>"
-print "<p><input type=\"submit\" value=\"送信\"  onclick=\"window.close()\" class=\"btn\"></p>"
-print "</form>"
-print '<p><label>定形スケジュール</label>'
 print "<form action=\"add_schedule.rb\" method=\"post\">"
 print "<input type=\"hidden\" name=\"s_day\" value=\""
 print day
 print "\">"
+print '<p>定形スケジュール：'
 print '<select name="s_title" onChange="this.form.submit()">'
 num=0
 db.execute('select * from defalt_s') do |row|
@@ -100,8 +84,34 @@ db.execute('select * from defalt_s') do |row|
 end
 print "<option value=\"no_name\" onClick=\"\">----------</option>"
 print "<option value=\"no_name\"onClick=\"mySubmit('no_name')\"><font color=\"red\">新規作成</font></option></select></p>"
-
-print "</form></div></div></div></body>"
+print "</form>"
+print "<form action=\"add_schedule.rb\" method=\"post\">"
+print "<label>件名：</label>"
+print "<input type=\"text\" name=\"content\" style=\"width: 60%; height: 1.5em;\" value=\"content\">"
+print "<br>"
+print "<label>開始：</label>"
+print "<input id=\"s_day\" type=\"text\" name=\"s_day\">"
+print "<input id=\"s_time\" type=\"text\" name=\"s_time\">"
+print "<br><label>終了：</label>"
+print "<input id=\"e_day\" type=\"text\" name=\"e_day\">"
+print "<input id=\"e_time\" type=\"text\" name=\"e_time\">"
+print '<p><label>カテゴリ：</label>'
+print '<select name="category">'
+num=0
+db.execute('select * from category where s=?', "1") do |row|
+  num += 1
+end
+c_name = Array.new(num)
+i=0
+db.execute('select * from category where s=?', "1") do |row|
+  c_name[i] = row[0]
+  print "<option value=\"#{c_name[i].to_s.chomp}\">#{c_name[i].to_s.chomp}</option>"
+  i += 1
+end
+print "<option value=\"no_name\">新規作成</option></select></p>"
+print "<p><input type=\"submit\" value=\"送信\"  onclick=\"window.close()\" class=\"btn\"></p>"
+print "</form><br>"
+print "</div></div></div></body>"
 print_t("new_schedule4.txt")
 print "$('#s_time').datetimepicker({" +"\n"
 print "	datepicker:false," +"\n"

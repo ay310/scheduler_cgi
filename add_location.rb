@@ -8,14 +8,14 @@ data = CGI.new
 print "Content-type: text/html\n\n"
 
 def count(f_name)
-  txt = open(f_name, "r:utf-8")
+  txt = open('../'+f_name, 'r:utf-8')
   t_count = txt.read.count("\n")
-  return t_count.to_i-1
+  t_count.to_i
 end
 
 def print_tx(f_name)
-  txt = File.open(f_name, 'r:utf-8').readlines
-  for i in 0..count(f_name)
+  txt = File.open("../"+f_name, 'r:utf-8').readlines
+  for i in 0..count(f_name) - 1
     print txt[i].to_s
   end
 end

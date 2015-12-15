@@ -127,7 +127,7 @@ def search_schedule(today, t, location_name)
 end
 
 def add_db_categorylocation
-  puts "call add_db_categorylocation!\n"
+#  puts "call add_db_categorylocation!\n"
   db = SQLite3::Database.new('scheduler.db')
   db.results_as_hash = true
   #↓カテゴリの個数を取得

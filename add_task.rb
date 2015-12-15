@@ -37,13 +37,13 @@ cal_plan_et = data['e_timed'].to_s.toutf8
 cal_memo = data['memo'].to_s.toutf8
 
 def count(f_name)
-  txt = open(f_name, 'r:utf-8')
+  txt = open('../'+f_name, 'r:utf-8')
   t_count = txt.read.count("\n")
   t_count.to_i
 end
 
 def print_t(f_name)
-  txt = File.open(f_name, 'r:utf-8').readlines
+  txt = File.open("../"+f_name, 'r:utf-8').readlines
   for i in 0..count(f_name) - 1
     print txt[i].to_s
   end
@@ -120,7 +120,7 @@ def new_category_view(t_id, title, e_day, e_time, tasktime, star, _about)
     print "\">"
   end
   print '  <label>件名：</label> '
-  print "  <input type=\"text\" name=\"title\" size=\"20\" value=\""
+  print "  <input type=\"text\" name=\"title\"  style=\"width: 60%; height: 1.5em;\" value=\""
   print title
   print "\">"
   print '  <br><label>締切：</label> '
@@ -135,21 +135,21 @@ def new_category_view(t_id, title, e_day, e_time, tasktime, star, _about)
   print tasktime
   print "\"><p>\n"
   print '<label>カテゴリ：</label>'
-  print "  <input type=\"text\" name=\"category\" size=\"20\" value=\"新規カテゴリ名\"><br>\n "
+  print "  <input type=\"text\" name=\"category\"  style=\"width: 60%; height: 1.5em;\" value=\"新規カテゴリ名\"><br>\n "
   print "<div class=\"hoge\">"
   print '<ul>'
   print "<li><input type=\"radio\" name=\"importance\" value=\"1\""
   print " checked=\"checked\"" if star == '1'
-  print '><br>1</li>'
+  print '><br>★・・</li>'
   print "<li><input type=\"radio\" name=\"importance\" value=\"2\""
   print " checked=\"checked\"" if star == '2'
-  print '><br>2</li>'
+  print '><br>★★・</li>'
   print "<li><input type=\"radio\" name=\"importance\" value=\"3\""
   print " checked=\"checked\"" if star == '3'
-  print '><br>3</li>'
+  print '><br>★★★</li>'
   print '</ul></div>'
   print '  <label>内容：</label>'
-  print "  <input type=\"text\" name=\"about\" size=\"20\" value=\"about\"><br>\n"
+  print "  <input type=\"text\" name=\"about\" style=\"width: 60%; height: 2.5em;\" value=\"about\"><br>\n"
   print "    <input type=\"submit\" value=\"送信\"  onclick=\"window.close()\" class=\"btn\">\n"
   print '</p></form></div>'
   print_t('in_task3.txt')

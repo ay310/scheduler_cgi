@@ -1,7 +1,0 @@
-<div id="menu_sp">
-<ul>
-<li><a href="add_location.rb">現在地の入力</a></li>
-<li><a href="view_task.rb">タスク</a></li>
-<li><a href="menu3.html">その他編集</a></li>
-</ul>
-</div><br>

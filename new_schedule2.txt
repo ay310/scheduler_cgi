@@ -1,4 +1,0 @@
-<form action="add_schedule.rb" method="post">
-  <label>件名：</label>
-  <input type="text" name="content" size="20" value="content">
-  <br>
