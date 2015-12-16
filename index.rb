@@ -440,6 +440,37 @@ end
           end
         end
       end
+    elsif flag=="sleep"
+      #寝起きの痕は準備とかあるので２時間取ります
+      #printf("call flag sleep!\n")
+      b_time=b_time.to_i-150
+      if b_time.to_i>@c_min[c].to_i
+        if task.to_i<b_time.to_i
+          if task.to_i>@c_max[c].to_i
+            st=to_h(to_min(e_time).to_i+120)
+            et=to_h(to_min(st).to_i+@c_max[c].to_i)
+            add_db_task(i, inputday, st, et)
+          elsif task.to_i<=@c_max[c].to_i
+            st=to_h(to_min(e_time).to_i+120)
+            et=to_h(to_min(st).to_i+task.to_i)
+            #printf("test: call456(st:%s, et%s, b_time:%s)\n", st, et, b_time)
+            add_db_task(i, inputday, st, et)
+          end
+        elsif
+          #task>=b_time
+          if b_time.to_i>@c_max[c].to_i
+            st=to_h(to_min(e_time).to_i+120)
+            et=to_h(to_min(st).to_i+@c_max[c].to_i)
+           #printf("test: call464(st:%s, et%s, b_time:%s)\n", st, et, b_time)
+            add_db_task(i, inputday, st, et)
+          else
+            st=to_h(to_min(e_time).to_i+120)
+            et=to_h(to_min(st).to_i+b_time.to_i)
+            #printf("test: call469(st:%s, et%s, b_time:%s)\n", st, et, b_time)
+            add_db_task(i, inputday, st, et)
+          end
+        end
+      end
     else
       #flag==1のとき
       if@c_max[c].to_i>task.to_i
@@ -767,7 +798,7 @@ event.sleep_t
 for i in 0..2
 #  event.eating_t(eat_st[i], eat_et[i])
 end
-# event.overlap_event("2015-11-04", "2015-11-04", "15:00", "17:00")
+#event.overlap_event("2015-11-04", "2015-11-04", "15:00", "17:00")
 event.null_task
 
 event.view_event

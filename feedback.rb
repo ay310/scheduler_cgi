@@ -260,17 +260,17 @@ read_schedule
 printf("<html>")
 printf("<head>")
 printf("<title>feedback</title>")
-printf("<link rel=\"shortcut icon\" href=\"http://mima.c.fun.ac.jp/1012151/css/feedback.css\" /></head>")
-printf("<link rel=\"shortcut icon\" href=\"http://mima.c.fun.ac.jp/1012151/img/favicon.ico\" /></head>")
+printf("<link rel='stylesheet' type='text/css'  href=\"http://mima.c.fun.ac.jp/1012151/css/feedback.css\" />\n")
+printf("<link rel=\"shortcut icon\" href=\"http://mima.c.fun.ac.jp/1012151/img/favicon.ico\" /></head>\n")
 printf("<body>")
-printf("<h1>%s〜%sのフィードバック</h1>\n",startday, endday)
-printf("<table>")
+printf("<div id=\"layout\"><div id=\"content\">\n")
+printf("<h1 id=\"h01\"> %s〜%sのフィードバック</h1>\n",startday, endday)
 printf("<p>今週のまとめの文章を表示</p>\n")
 
-printf("<h2>総タスク作業時刻</h2>\n")
+printf("<h2 id=\"h02\"> 総タスク作業時刻</h2>\n")
 printf("<p>%s</p>\n",total_tasktime(startday, endday))
 
-printf("<h2>カテゴリ別作業時刻</h2>\n")
+printf("<h2 id=\"h02\"> カテゴリ別作業時刻</h2>\n")
 for i in 0..@c_num.to_i
   c_time=category_tasktime(startday, endday, @c_name[i])
   if c_time!="00:00"
@@ -278,12 +278,12 @@ for i in 0..@c_num.to_i
   end
 end
 
-printf("<h2>タスク別進捗状況</h2>\n")
+printf("<h2 id=\"h02\"> タスク別進捗状況</h2>\n")
 for i in 0..@t_num.to_i-1
   t_time=task_proportion(i)
   printf("<p>%s：%s</p>\n",@t_title[i], t_time)
 end
 
-printf("<h2>今週重点を置くべきこと</2>\n")
-printf("</table>")
-printf("</body>")
+printf("<h2 id=\"h02\"> 今週重点を置くべきこと</2>\n")
+printf("</div></div>")
+printf("</body></html>")

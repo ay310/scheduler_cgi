@@ -134,51 +134,6 @@ def input_def(name, sday)
   db.close
 end
 
-def input_taskschedule(name, sday)
-  #新規タスクのスケジュールの場合
-  db = SQLite3::Database.new('scheduler.db')
-  db.results_as_hash = true
-  db.execute('select * from task where title=?', name) do |row|
-  $id=row[0].to_s
-  $category=row[6].to_s
-  end
-  print_t('new_schedule1.txt')
-  print "<form action=\"add_schedule.rb\" method=\"post\">"
-  print "<input type=\"hidden\" name=\"t_id\" value=\""
-  print $id
-  print "\">"
-  print "<label>件名：</label>"
-  print "<input type=\"text\" name=\"content\"  style=\"width: 60%; height: 1.5em;\" value=\""
-  print name
-  print "\">"
-  print "<br>"
-  print_t('new_schedule3.txt')
-  print '<p><label>カテゴリ：</label>'
-  print '<select name="category">'
-  i=0
-  num=0
-  db.execute('select * from category where s=?', "1") do |row|
-    num += 1
-  end
-  c_name = Array.new(num)
-  db.execute('select * from category where s=?', "1") do |row|
-    c_name[i] = row[0]
-    print "<option value=\"#{c_name[i].to_s.chomp}\""
-    if c_name[i]==$category
-      print "selected"
-    end
-    print ">#{c_name[i].to_s.chomp}</option>"
-    i += 1
-  end
-  print "</select></p>"
-  print "<p><input type=\"submit\" value=\"送信\"  onclick=\"window.close()\" class=\"btn\"></p>"
-  print '</form></div></div></div></body>'
-  print_t('new_schedule4.txt')
-  picker(sday, sday, $st, $et)
-  print_t('new_schedule5.txt')
-  db.close
-end
-
 def new_category(id, title, sd, ed, st, et)
   #新規カテゴリ作成が選択された場合
   print_t('new_schedule1.txt')
@@ -255,8 +210,6 @@ end
 if del != ''
   # 削除ボタンが選択された時
   del_schedule(del)
-elsif t_title!="" && task!=""
-    input_taskschedule(t_title, s_day)
 elsif search_title != ""
   # 定型文から選択された時
   input_def(search_title, s_day)
