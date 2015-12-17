@@ -60,14 +60,14 @@ min = Array.new(num)
 max = Array.new(num)
 i = 0
 print "<div id=\"layout\"><div id=\"content\">\n"
-printf("<h1>カテゴリ編集</h1><hr>\n")
+printf("<h1 id=\"h01\">カテゴリ編集</h1><hr>\n")
 db.execute('select * from category') do |row|
   name[i] = row[0]
-  s[i] = row[1]
-  t[i] = row[2]
-  location[i] = row[3]
-  another[i] = row[4]
-  pc[i] = row[5]
+  location[i] = row[1]
+  another[i] = row[2]
+  pc[i] = row[3]
+  s[i] = row[4]
+  t[i] = row[5]
   max[i] = row[7]
   min[i] = row[8]
   i += 1
@@ -81,14 +81,20 @@ if edit_taskid.to_s=="" && edit_id.to_s==""
       print  i
       print "')\"><u>"
       print name[i]
-      printf("</u>：連続作業可能時間：%s 〜%s", to_h(min[i].to_i), to_h(max[i].to_i))
-      print"</p>\n"
+      printf("</u></p>\n<p>　連続作業可能時間：%s 〜%s</p>\n", to_h(min[i].to_i), to_h(max[i].to_i))
+      if location[i].to_s!=""
+        printf("<p>　位置情報：%s </p>\n", location[i].to_s)
+      end
     end
     print "<div id = \"buttom\" align=\"right\" style=\"clear:both;\"></div></form></div>"
+    print "<div id = \"buttom\" align=\"right\" style=\"clear:both;\">"
+  print "<form><INPUT type=\"button\" onClick='history.back();' value=\"戻る\" class=\"btn\">"
+  print "</form></div></div></div></body>\n"
+  print_t('edit_category5.txt')
 elsif edit_taskid.to_s!=""
   #もしedit_tasknameが空白じゃなかったら、編集画面を出力する
   id=edit_taskid.to_i
-  print "<form action=\"/cgi-bin/cal/edit_category.rb\" method=\"post\">"
+  print "<form action=\"edit_category.rb\" method=\"post\">"
   print "<input type=\"hidden\" name=\"c_id\" value=\""
   print id
   print "\">\n"
@@ -106,7 +112,6 @@ elsif edit_taskid.to_s!=""
   printf("ロケーション指定\n")
   print "<p><input type=\"submit\" value=\"変更\"  onclick=\"window.close()\" class=\"btn\"></p>"
   print '</form>'
-
   print_t("edit_category3.txt")
 
   print "  $('#min_time').datetimepicker({\n"
@@ -131,7 +136,7 @@ elsif edit_id.to_s!=""
     db.execute('update category set max =?  where name=?', e_max, name[edit_id.to_i])
   db.close
   printf("<label>カテゴリ名：<u>")
-  print name[id.to_i]
+  print name[edit_id.to_i]
   print "</u><br>"
   printf("作業可能最小時刻\n")
   printf edit_min
@@ -141,7 +146,9 @@ elsif edit_id.to_s!=""
     print "<br>"
     printf("\nに変更しました！\n")
         print "<br>"
-    printf("<a href=\"edit_category.rb\">もどる</a>\n")
+        print "<div id = \"buttom\" align=\"right\" style=\"clear:both;\">"
+      print "<form><INPUT type=\"button\" onClick='history.back();' value=\"戻る\" class=\"btn\">"
+      print "</form></div></div></div></body>\n"
 end
 print_t('edit_category5.txt')
 db.close

@@ -78,7 +78,7 @@ def update_task(t_id, title, e_day, e_time, tasktime, about, category, star)
   db.execute('update task set importance =?  where id=?', star, t_id)
   db.close
   print '<html>'
-  print '<head><META http-equiv="refresh"; content="0; URL=index.rb"></head><body></body></html>'
+  print '<head><META http-equiv="refresh"; content="0; URL="index.rb"></head><body></body></html>'
 end
 
 def add_task(title, e_day, e_time, tasktime, about, category, star)
@@ -113,7 +113,7 @@ def new_category_view(t_id, title, e_day, e_time, tasktime, star, _about)
   print_t('in_task1.txt')
   print " <div align=\"center\"><p>タスク入力</p></div> \n"
   print "<br><br><div id = \"main\" style=\"float:left;\"> \n"
-  print "<form action=\"/cgi-bin/cal/add_task.rb\" method=\"post\">\n "
+  print "<form action=\"add_task.rb\" method=\"post\">\n "
   if t_id != ''
     print "<input type=\"hidden\" name=\"t_id\" value=\""
     print t_id

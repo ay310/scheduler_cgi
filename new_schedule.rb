@@ -56,7 +56,7 @@ if inputday.length>=12
   day=sepalate_d(inputday)
   st=sepalate_t(inputday)
 else
-day==inputday
+day=inputday
 end
 
 et=decide_et(st).to_s
@@ -108,9 +108,11 @@ db.execute('select * from category where s=?', "1") do |row|
   print "<option value=\"#{c_name[i].to_s.chomp}\">#{c_name[i].to_s.chomp}</option>"
   i += 1
 end
-print "<option value=\"no_name\">新規作成</option></select></p>"
-print "<p><input type=\"submit\" value=\"送信\"  onclick=\"window.close()\" class=\"btn\"></p>"
-print "</form><br>"
+print "<option value=\"no_name\">新規作成</option></select></p>\n"
+print "<p><input type=\"submit\" value=\"送信\"  onclick=\"window.close()\" class=\"btn\"></p>\n"
+print "</form><br>\n"
+print "<div id = \"buttom\" align=\"right\" style=\"clear:both;\">\n"
+print "<form><INPUT type=\"button\" onClick='history.back();' value=\"戻る\" class=\"btn\"></form>\n"
 print "</div></div></div></body>"
 print_t("new_schedule4.txt")
 print "$('#s_time').datetimepicker({" +"\n"
@@ -125,7 +127,7 @@ print "$('#s_day').datetimepicker({" +"\n"
 print "	lang:'jp'," +"\n"
 print "	timepicker:false," +"\n"
 print "	value:'"
-print day.to_s.chomp
+print day
 print "',"
 print "	format:'Y-m-d'," +"\n"
 print "	formatDate:'Y/m/d'," +"\n"
@@ -142,7 +144,7 @@ print "$('#e_day').datetimepicker({" +"\n"
 print "	lang:'jp'," +"\n"
 print "	timepicker:false," +"\n"
 print "	value:'"
-print day.to_s.chomp
+print day
 print "',"
 print "	format:'Y-m-d'," +"\n"
 print "	formatDate:'Y/m/d'," +"\n"

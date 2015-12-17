@@ -34,6 +34,8 @@ print '<head> '
 print '<title>Scheduler</title>'
 print "\n "
 print "<link href=\"http://mima.c.fun.ac.jp/1012151/css/task.css\" rel=\"stylesheet\">"
+print '<meta name="viewport" content="width=320, height=480,initial-scale=1.0, minimum-scale=1.0, maximum-scale=2.0, user-scalable=yes" />'
+print"\n"
 print '</head> '
 print "\n "
 print '<body>'
@@ -107,7 +109,6 @@ print "\n "
 print "<input type=\"submit\" value=\"削除\"  onclick=\"window.close()\" class=\"btn\"></p>\n  "
 print '  </form>'
 print "\n "
-
 print "<a href=\"index.rb\">もどる</a>\n "
 print "</div>\n"
 print '</body></html>'

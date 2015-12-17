@@ -49,8 +49,8 @@ if t_id == ''
     db.execute("update task set category = '未設定' where category=?", del_category)
     db.execute('delete from category where name=?', del_category)
   end
-  #print '<html>'
-  #print '<head><META http-equiv="refresh"; content="0; URL=/cgi-bin/cal/view_task.rb"></head><body></body></html>'
+  print '<html>'
+  print '<head><META http-equiv="refresh"; content="0; URL=view_task.rb"></head><body></body></html>'
 else
   #既存のタスクの編集のとき
   print_t('in_task1.txt')

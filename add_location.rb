@@ -20,13 +20,14 @@ def print_tx(f_name)
   end
 end
 
-  print " <!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">"
-  print "<title>Scheduler　ー　位置情報の追加</title>"
-  print "<link rel=\"stylesheet\" href=\"css/task.css\">"
-  print "<script language=\"JavaScript\">function mySubmit( place ) {document.form1.allday.value = place;document.form1.submit();}</script>"
-  print "</head><body>"
-  print "<div id=\"layout\"><div id=\"content\">"
-  print "  <form action=\"send_gps.rb\" method=\"get\">"
+print " <!DOCTYPE html><html lang=\"ja\"><head><meta charset=\"utf-8\">"
+print "<title>Scheduler　ー　位置情報の追加</title>"
+print "<link rel=\"stylesheet\" href=\"css/task.css\">"
+print "<script language=\"JavaScript\">function mySubmit( place ) {document.form1.allday.value = place;document.form1.submit();}</script>"
+print '<meta name="viewport" content="width=320, height=480,initial-scale=1.0, minimum-scale=1.0, maximum-scale=2.0, user-scalable=yes" />'
+print "</head><body>"
+print "<div id=\"layout\"><div id=\"content\">"
+print "  <form action=\"send_gps.rb\" method=\"get\">"
 print "  <p>現在地名：<input type=\"text\" name=\"addlocation\"></p>"
 print "<p><input type=\"submit\" value=\"送信\"> "
 print "</form>"
