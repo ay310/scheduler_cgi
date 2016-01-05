@@ -111,7 +111,37 @@ end
 print "<option value=\"no_name\">新規作成</option></select></p>\n"
 print "<p><input type=\"submit\" value=\"送信\"  onclick=\"window.close()\" class=\"btn\"></p>\n"
 print "</form><br>\n"
-print "<div id = \"buttom\" align=\"right\" style=\"clear:both;\">\n"
+#以下タスク--------------------------------------------------------------------
+print "・タスク<hr>\n"
+print "<form action=\"add_schedule.rb\" method=\"post\">\n"
+print "<input type=\"hidden\" name=\"s_day\" value=\"\n"
+print day
+print "\">"
+print "<input type=\"hidden\" name=\"task\" value=\"\n"
+print "task"
+print "\">"
+print "<input type=\"hidden\" name=\"st\" value=\""
+print st
+print "\">"
+print "<input type=\"hidden\" name=\"et\" value=\""
+print et
+print "\">"
+print '<p>タスク名を選択：'
+print '<select name="t_title" onChange="this.form.submit()">'
+num=0
+db.execute('select * from defalt_s') do |row|
+  num += 1
+end
+name = Array.new(num)
+i=0
+print "<option value=\"\" selected>選択する</option>\n"
+db.execute('select * from task') do |row|
+  name[i] = row[1]
+  print "<option value=\"#{name[i].to_s.chomp}\" onClick=\"mySubmit('#{name[i].to_s.chomp}')\">#{name[i].to_s.chomp}</option>"
+  i += 1
+end
+print "</select></p>\n"
+print "</form>\n"
 print "<form><INPUT type=\"button\" onClick='history.back();' value=\"戻る\" class=\"btn\"></form>\n"
 print "</div></div></div></body>"
 print_t("new_schedule4.txt")

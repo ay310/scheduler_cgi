@@ -343,7 +343,6 @@ end
     end
     db.close
   end
-
   def eating_t(st, et)
     day = @today
     db = SQLite3::Database.new('scheduler.db')
@@ -364,9 +363,6 @@ end
   end
 
   def add_db_task(i, inputday, st, et)
-    #printf("test: !!call add_db_task (%s, %s, %s, %s)\n", i, inputday, st, et)
-    #p num
-    #printf("test: i:%s, s:%s, st:%s, et:%s\n", i, s, st, et)
   	db = SQLite3::Database.new('scheduler.db')
   	db.execute('insert into schedule  (title, s_day, s_time, e_day, e_time, category, st, completed) values(?, ?, ?, ?, ?, ?, ?, ?)', @t_title[i], inputday, st, inputday, et, @t_category[i], @t_id[i], '0')
     if @l_tasktime[i]=="00:00"
@@ -402,9 +398,7 @@ end
               #ここまで、タスクがc_min以下だった場合タスク時間をc_minの差分分増やす
           end
           if b_time.to_i >task.to_i
-            #printf("test: call392 c_max is %s\n",@c_max[c])
             if task.to_i > @c_max[c].to_i
-              #printf("test: call394n")
               #ad c_max
               st=to_h(to_min(e_time).to_i+10)
               et=to_h(to_min(st).to_i+@c_max[c].to_i)
@@ -413,7 +407,6 @@ end
               #ad task
               st=to_h(to_min(e_time).to_i+10)
               et=to_h(to_min(st).to_i+task.to_i)
-              #printf("test: call403\n")
               add_db_task(i, inputday, st, et)
             end
           else
@@ -421,21 +414,17 @@ end
               #ad c_mac
               st=to_h(to_min(e_time).to_i+10)
               et=to_h(to_min(st).to_i+@c_max[c].to_i)
-              #printf("test: call411\n")
               add_db_task(i, inputday, st, et)
             elsif b_time.to_i < @c_max[c].to_i
               #ad b_time
               st=to_h(to_min(e_time).to_i+10)
               et=to_h(to_min(st).to_i+b_time.to_i)
-              #printf("test: call417(st:%s, et%s, b_time:%s)\n", st, et, b_time)
               add_db_task(i, inputday, st, et)
             end
           end
         end
       elsif flag.to_s=="c"
         #カテゴリ一緒の時
-        #寝起きの痕は準備とかあるので２時間取ります
-        #printf("call flag sleep!\n")
         b_time=b_time.to_i-150
         if b_time.to_i>@c_min[c].to_i
           if task.to_i<b_time.to_i
@@ -446,7 +435,6 @@ end
             elsif task.to_i<=@c_max[c].to_i
               st=to_h(to_min(e_time).to_i+120)
               et=to_h(to_min(st).to_i+task.to_i)
-              #printf("test: call456(st:%s, et%s, b_time:%s)\n", st, et, b_time)
               add_db_task(i, inputday, st, et)
             end
           elsif
@@ -478,7 +466,6 @@ end
             elsif task.to_i<=@c_max[c].to_i
               st=to_h(to_min(e_time).to_i+120)
               et=to_h(to_min(st).to_i+task.to_i)
-              #printf("test: call456(st:%s, et%s, b_time:%s)\n", st, et, b_time)
               add_db_task(i, inputday, st, et)
             end
           elsif
@@ -486,12 +473,10 @@ end
             if b_time.to_i>@c_max[c].to_i
               st=to_h(to_min(e_time).to_i+120)
               et=to_h(to_min(st).to_i+@c_max[c].to_i)
-              #printf("test: call464(st:%s, et%s, b_time:%s)\n", st, et, b_time)
               add_db_task(i, inputday, st, et)
             else
               st=to_h(to_min(e_time).to_i+120)
               et=to_h(to_min(st).to_i+b_time.to_i)
-              #printf("test: call469(st:%s, et%s, b_time:%s)\n", st, et, b_time)
               add_db_task(i, inputday, st, et)
             end
           end
@@ -525,7 +510,9 @@ end
     until i==@t_num
       check_tasktime(@t_id[i])
       if $resttime!=0
-        endday=@te_day[i]
+        if chint(endday).to_i>chint(@te_day[i]).to_i
+          endday=@te_day[i]
+        end
         for j in 0.. @c_num.to_i-1
           if @t_category[i].to_s==@c_name[j].to_s
             c=j
@@ -537,7 +524,7 @@ end
         if prevday(checkday)==endday && $resttime>0
           #開いた当日が締切日の場合
           for j in 0..@num.to_i-1
-            if endday==@e_day[j]
+            if endday==@e_day[j].to_s
               s=j
               break
             end
@@ -548,10 +535,11 @@ end
           end
         end
         #当日締切end
-        until chint(checkday)>chint(endday)
+        until chint(checkday)>=chint(endday)
           if $resttime<=0
             break;
           end
+          #printf("checkday=%s, s=%s,endday=%s\n", checkday, s, endday)
           while chint(checkday).to_i>chint(@e_day[s]).to_i
             s=s+1
           end
@@ -578,17 +566,20 @@ end
           else
             #指定日に予定がない
           end
-          if chint(checkday).to_i < chint(@e_day[s]).to_i
+          if @e_day[s]==nil
+            checkday=nextday(checkday)
+             #printf("i=%s %s,%s\n",i, checkday, @te_day[i].to_s)
+          elsif chint(checkday).to_i<=chint(@te_day[i]).to_i
             checkday=nextday(checkday)
           end
         end
         #checkdayが締め切りになるまで
         if $resttime!=0
-          #printf("test 530/call not_same_category:%s\n",i)
           #以下、カテゴリどうし近しいものが無かった場合強制的に追加
           checkday=@today
           decide_s_schedule(@today)
           s=@num_i.to_i
+          #printf("i=%s %s,%s\n",i, checkday, @e_day[s].to_s)
           until chint(checkday)>chint(endday)
             if $resttime==0
               break;
@@ -760,7 +751,6 @@ end
     print_t('body2.txt')
   end
 end
-
 print '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">'
 print '<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">'
 print '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />'
@@ -770,7 +760,7 @@ print_t('js1.txt')
 #
 # 以下、イベント追加の記述
 # ユーザ設定に必要な変数
-inputdays = '14'
+inputdays = '15'
 eat_st = ['08:00', '12:00', '19:30']
 eat_et = ['08:30', '13:00', '20:10']
 
@@ -785,12 +775,10 @@ end
 event = Locate_events.new(today, inputdays)
 event.decide_s_schedule(today)
 event.sleep_t
-for i in 0..2
+#for i in 0..2
 #  event.eating_t(eat_st[i], eat_et[i])
-end
-#event.overlap_event("2015-11-04", "2015-11-04", "15:00", "17:00")
+#end
 event.null_task
-
 event.view_event
 print_t('js2.txt')
 print '</head>'

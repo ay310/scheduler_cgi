@@ -44,7 +44,7 @@ def nextday(today)
   end
   mm = day[1].to_i
   if day[1]=="12" && day[2]=="31"
-    return day[0].to_i+1+"-01-01"
+    return (day[0].to_i+1).to_s+"-01-01"
   elsif day[2].to_i < month[mm - 1].to_i
     dd = day[2].to_i + 1
     return day[0].to_s + '-' + chday(day[1]).to_s + '-' + chday(dd).to_s
@@ -64,7 +64,7 @@ def prevday(today)
   end
   mm = day[1].to_i
   if day[1]=="01" && day[2]=="01"
-    return day[0].to_i-1+"-12-31"
+    return (day[0].to_i-1).to_s+"-12-31"
   elsif day[2]=="01"
     mm=day[1].to_i
     dd=month[mm-2].to_i

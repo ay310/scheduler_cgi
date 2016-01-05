@@ -23,7 +23,6 @@ $about = Array.new($num)
 $category = Array.new($num)
 $importance = Array.new($num)
 $i = 0
-
 print '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">'
 print "\n "
 print '<html xmlns="http://www.w3.org/1999/xhtml" lang="ja"> '
@@ -71,7 +70,7 @@ db.execute(sql) do |row|
   print '<br><br>'
       print "\n "
 end
-print "   <input type=\"submit\" value=\"編集\" class=\"btn\"></p>\n  "
+print "  <input type=\"submit\" value=\"編集\" class=\"btn\"></p>\n  "
 print ' </form> '
 
 print "\n "
@@ -109,8 +108,9 @@ print "\n "
 print "<input type=\"submit\" value=\"削除\"  onclick=\"window.close()\" class=\"btn\"></p>\n  "
 print '  </form>'
 print "\n "
-print "<a href=\"index.rb\">もどる</a>\n "
-print "</div>\n"
+print "<div id = \"buttom\" align=\"right\" style=\"clear:both;\">\n"
+print "<form><INPUT type=\"button\" onClick='history.back();' value=\"戻る\" class=\"btn\">\n"
+print "</form></div></div></div>\n"
 print '</body></html>'
 print "\n "
 db.close
