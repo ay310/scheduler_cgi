@@ -123,6 +123,7 @@ elsif $st == 's'
   print '<script src="http://mima.c.fun.ac.jp/1012151/js/jquery.js"></script>' + "\n"
   print '<script src="http://mima.c.fun.ac.jp/1012151/js/jquery.datetimepicker.js"></script>' + "\n"
   print '<script src="http://mima.c.fun.ac.jp/1012151/js/build/jquery.datetimepicker.full.js"></script>' + "\n"
+    print '<meta name="viewport" content="width=320, height=480,initial-scale=1.0, minimum-scale=1.0, maximum-scale=2.0, user-scalable=yes" />' + "\n"
   print '<script language="JavaScript">' + "\n"
   print 'function mySubmit( place ) {' + "\n"
   print 'document.form1.allday.value = place;' + "\n"

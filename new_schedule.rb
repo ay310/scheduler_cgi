@@ -35,7 +35,6 @@ def to_h(min)
   min = '0' + min.to_s if min < 10
   hour.to_s + ':' + min.to_s
 end
-
 def sepalate_d(day)
 dt = day.split("T")
 return dt[0]

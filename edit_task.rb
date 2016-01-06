@@ -45,12 +45,12 @@ if t_id == ''
   end
 
   # カテゴリ削除を選択された時
-  if del_category != '' && del_category != '未設定'
+  if del_category != '未設定'
     db.execute("update task set category = '未設定' where category=?", del_category)
     db.execute('delete from category where name=?', del_category)
   end
   print '<html>'
-  print '<head><META http-equiv="refresh"; content="0; URL=view_task.rb"></head><body></body></html>'
+  print '<head><META http-equiv="refresh"; content="0; URL=index.rb"></head><body></body></html>'
 else
   #既存のタスクの編集のとき
   print_t('in_task1.txt')

@@ -261,6 +261,7 @@ def edit_db_schedule(id, title, sd, ed, st, et, category)
 end
 
 def edit_db_t_schedule(t_id, title, sd, ed, st, et)
+  #手動でタスクを入力した時
     db = SQLite3::Database.new('scheduler.db')
     db.execute('select * from par') do |row|
       $per = row[0]
@@ -273,8 +274,8 @@ def edit_db_t_schedule(t_id, title, sd, ed, st, et)
     end
     ct=to_h((to_min(et).to_i-to_min(st).to_i)+to_min($o_ct).to_i).to_s
     task_time= to_h((100/$per.to_f)*to_min(ct).to_f)
-
-    log = "time:"+(to_min(et).to_i-to_min(st).to_i).to_s+"("+($per.to_i-$o_per.to_i).to_s+")"
+ #MANUAL(作業時間50,進捗◯%)
+    log = "MANUAL("+sd+","+st+"作業時間"+(to_min(et).to_i-to_min(st).to_i).to_s+",進捗"+$o_per.to_s+"→"+$per.to_s+")"
 
     printf("ct=%s, per=%s, old_tasktime=%s, task_time=%s, log=%s\n", ct, $per, $tt, task_time, log)
   db.results_as_hash = true

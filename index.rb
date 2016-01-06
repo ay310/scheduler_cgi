@@ -647,6 +647,24 @@ end
     put_task
   end
 
+def search_nilschedule
+  read_schedule
+  db = SQLite3::Database.new('scheduler.db')
+    for i in 0.. @num
+      if @title[i]==nil
+        db.execute('delete from schedule where id=?', @id[i])
+      elsif @s_day[i]==nil
+        db.execute('delete from schedule where id=?', @id[i])
+      elsif @e_day[i]==nil
+        db.execute('delete from schedule where id=?', @id[i])
+      elsif @s_time[i]==nil
+        db.execute('update schedule set s_time = ? where id=?', "00:00", @id[i])
+      elsif @e_time[i]==nil
+        db.execute('update schedule set e_time = ? where id=?', "23:59", @id[i])
+      end
+    end
+  db.close
+end
   def view_event
     read_schedule
     for i in 0..@num - 1
@@ -779,6 +797,7 @@ event.sleep_t
 #  event.eating_t(eat_st[i], eat_et[i])
 #end
 event.null_task
+event.search_nilschedule
 event.view_event
 print_t('js2.txt')
 print '</head>'

@@ -28,6 +28,7 @@ del_id = data['del'].to_s
 #
 cal_t_id = data['calt_id'].to_s
 cal_s_id = data['s_id'].to_s.toutf8
+cal_t_day = data['s_day'].to_s.toutf8
 # 以下実際出来た時刻
 cal_st = data['cals_time'].to_s.toutf8
 cal_et = data['cale_time'].to_s.toutf8
@@ -66,9 +67,19 @@ def to_h(min)
   return hour.to_s + ':' + min.to_s
 end
 
+def return_index
+  print '<html>'
+  print '<head><META http-equiv="refresh"; content="0; URL=index.rb"></head><body></body></html>'
+end
+
 def update_task(t_id, title, e_day, e_time, tasktime, about, category, star)
+  #タスク編集時はここが呼ばれる
+  new_limit=$old_log.to_s+",締切"+e_day.to_s+e_time.to_s+","
   db = SQLite3::Database.new('scheduler.db')
   db.results_as_hash = true
+  db.execute('select * from task where id=?', $id) do |row|
+    $old_log = row[10]
+  end
   db.execute('update task set title =?  where id=?', title, t_id)
   db.execute('update task set e_time =?  where id=?', e_time, t_id)
   db.execute('update task set e_day =?  where id=?', e_day, t_id)
@@ -76,18 +87,18 @@ def update_task(t_id, title, e_day, e_time, tasktime, about, category, star)
   db.execute('update task set about =?  where id=?', about, t_id)
   db.execute('update task set category =?  where id=?', category, t_id)
   db.execute('update task set importance =?  where id=?', star, t_id)
+  db.execute('update task set log =?  where id=?', new_limit, t_id)
   db.close
-  print '<html>'
-  print '<head><META http-equiv="refresh"; content="0; URL="index.rb"></head><body></body></html>'
+return_index
 end
 
 def add_task(title, e_day, e_time, tasktime, about, category, star)
+  log="締切"+e_day.to_s+e_time.to_s
   db = SQLite3::Database.new('scheduler.db')
   db.results_as_hash = true
-  db.execute('insert into task  (title, e_time, e_day, t_time, about, category, importance, time, located) values(?, ?, ?, ?, ?, ?, ?, ?, ?)', title, e_time, e_day, tasktime, about, category, star, '00:00', '00:00')
+  db.execute('insert into task  (title, e_time, e_day, t_time, about, category, importance, time, located, log) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', title, e_time, e_day, tasktime, about, category, star, '00:00', '00:00',log)
   db.close
-  print '<html>'
-  print '<head><META http-equiv="refresh"; content="0; URL=index.rb"></head><body></body></html>'
+return_index
 end
 
 def check_category(category)
@@ -181,7 +192,7 @@ def cal_ptime(b_time, a_time)
   return r_time.to_i
 end
 
-def task_scheduler(cal_t_id, cal_s_id, cal_st, cal_et, cal_plan_st, cal_plan_et)
+def task_scheduler(cal_t_id, cal_s_id, cal_st, cal_et, cal_plan_st, cal_plan_et, t_day)
   # カレンダーから来た場合の処理
   db = SQLite3::Database.new('scheduler.db')
   db.execute('update schedule set completed =?  where id=?', "1", cal_s_id)
@@ -191,6 +202,7 @@ def task_scheduler(cal_t_id, cal_s_id, cal_st, cal_et, cal_plan_st, cal_plan_et)
     $c_time = row[8]
     $located_time = row[9]
     $log = row[10]
+    $o_per= row[11]
   end
   db.execute('select * from par') do |row|
     $per = row[0]
@@ -209,10 +221,11 @@ def task_scheduler(cal_t_id, cal_s_id, cal_st, cal_et, cal_plan_st, cal_plan_et)
   if $log.blank?
     new_log=to_min(completed_time).to_s+"(".to_s+plan.to_s+")".to_s
   else
-    new_log = $log.to_s+","+to_min(completed_time).to_s+"(".to_s+plan.to_s+")".to_s
+    #自動配置に従い行ったタスクのログ
+    new_log =$log.to_s+"AUTO("+t_day+"作業時間"+to_min(completed_time).to_s+",計画との差"+plan.to_s+",進捗"+$o_per.to_s+"→"+$per.to_s+")"
   end
   #以下％からタスク時刻を再度決める
-  task_time= (100/$per.to_i)*to_min(tt).to_i
+  task_time= (100/$per.to_f)*to_min(tt).to_f
 
   task_time=to_h(task_time).to_s
     printf("task_time is %s. tt is %s\n", task_time, tt)
@@ -220,15 +233,14 @@ def task_scheduler(cal_t_id, cal_s_id, cal_st, cal_et, cal_plan_st, cal_plan_et)
   db.execute('update task set time =?  where id=?', tt, cal_t_id)
     db.execute('update task set t_time =?  where id=?', task_time, cal_t_id)
   db.close
-  print '<html>'
-  print '<head><META http-equiv="refresh"; content="0; URL=index.rb"></head><body></body></html>'
+return_index
 end
 
 if cal_t_id != '' && cal_s_id != ''
   #
   # カレンダーから来た場合、以下の処理を行う
   #
-  task_scheduler(cal_t_id, cal_s_id, cal_st, cal_et, cal_plan_st, cal_plan_et)
+  task_scheduler(cal_t_id, cal_s_id, cal_st, cal_et, cal_plan_st, cal_plan_et, cal_t_day)
 else
   #
   # タスクから来た場合、以下の処理を行う
@@ -267,8 +279,7 @@ else
     db.execute('delete from task where id=?', del_id)
     db.execute('delete from schedule where st=?', del_id)
     db.close
-    print '<html>'
-    print '<head><META http-equiv="refresh"; content="0; URL=index.rb"></head><body></body></html>'
+return_index
   else
     p 'error'
   end

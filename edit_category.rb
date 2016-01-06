@@ -87,6 +87,26 @@ if edit_taskid.to_s=="" && edit_id.to_s==""
       end
     end
     print "<div id = \"buttom\" align=\"right\" style=\"clear:both;\"></div></form></div>"
+    print 'カテゴリの削除：'
+    print "\n "
+    print "<form action=\"edit_task.rb\" method=\"post\"> \n "
+    print "  <select name=\"del_category\">\n  "
+    $c_name = Array.new(num)
+    $c = 0
+    sql = 'select * from category'
+    db.execute(sql) do |row|
+      $c_name[$c] = row[0]
+      print "<option value=\""
+      print $c_name[$c]
+      print "\">"
+      print $c_name[$c]
+      print "</option>\n "
+      $c += 1
+    end
+    print '  </select> '
+    print "\n "
+    print "<input type=\"submit\" value=\"削除\"  onclick=\"window.close()\" class=\"btn\"></p>\n  "
+    print '  </form>'
     print "<div id = \"buttom\" align=\"right\" style=\"clear:both;\">"
   print "<form><INPUT type=\"button\" onClick='history.back();' value=\"戻る\" class=\"btn\">"
   print "</form></div></div></div></body>\n"
