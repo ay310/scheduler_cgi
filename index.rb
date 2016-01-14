@@ -579,7 +579,7 @@ end
           checkday=@today
           decide_s_schedule(@today)
           s=@num_i.to_i
-          #printf("i=%s %s,%s\n",i, checkday, @e_day[s].to_s)
+          printf("強制i=%s %s,%s\n",i, checkday, @e_day[s].to_s)
           until chint(checkday)>chint(endday)
             if $resttime==0
               break;
@@ -706,6 +706,7 @@ end
   def view_taskmenu
     read_task
     print_t('body1.txt')
+    printf("<p><a href=\"http://mima.c.fun.ac.jp/1012151/つかいかた\"><b>つかいかたをみる</b></a></p>\n")
     printf("<p><a href=\"feedback.rb\"><b>振り返る</b></a></p>\n")
     print "<p>現在地は"
     print read_location.to_s

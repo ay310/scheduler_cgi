@@ -13,6 +13,9 @@ edit_id = data['c_id'].to_s.toutf8
 edit_min = data['min_time'].to_s.toutf8
 edit_max = data['max_time'].to_s.toutf8
 
+#新規カテゴリ作成の場合
+new_categoryname= data['new_category'].to_s.toutf8
+
 def to_min(time)
   if time == "00:00"
     return 0
@@ -41,6 +44,33 @@ def print_t(f_name)
   for i in 0..count(f_name) - 1
     print txt[i].to_s
   end
+end
+
+def return_index
+  print '<html>'
+  print '<head><META http-equiv="refresh"; content="0; URL=index.rb"></head><body></body></html>'
+end
+
+def new_category(name)
+  db = SQLite3::Database.new('scheduler.db')
+  db.results_as_hash = true
+  found = 0
+  # カテゴリが新規に作成されたものなら０、違うなら１
+  db.execute('select * from category where name=?', name) do |row|
+    found = 1
+  end
+  if found == 0
+    # カテゴリが新規（フラグが立たなかった）時
+    db.transaction do
+      db.execute('insert into category  (name, s, t, max, min) values(?, ?, ?, ?, ?)', name, "1", "0", "180", "30")
+    end
+  else
+    #カテゴリがあったが、スケジュールで作成されたタスクだった場合
+        db.execute('update category set s =?  where name=?', "1", name)
+        db.execute('update category set t =?  where name=?', "1", name)
+  end
+  db.close
+  return_index
 end
 
 print_t('edit_category1.txt')
@@ -72,7 +102,7 @@ db.execute('select * from category') do |row|
   min[i] = row[8]
   i += 1
 end
-if edit_taskid.to_s=="" && edit_id.to_s==""
+if edit_taskid.to_s=="" && edit_id.to_s=="" && new_categoryname==""
     #表示画面
     print "<FORM name=\"form1\" action=\"edit_category.rb\" onSubmit=\"return false\">\n"
     print"<p><input type=\"hidden\" name=\"taskid\" value=\"\">\n"
@@ -86,6 +116,10 @@ if edit_taskid.to_s=="" && edit_id.to_s==""
         printf("<p>　位置情報：%s </p>\n", location[i].to_s)
       end
     end
+    print'</form><form action="edit_category.rb" method="post">'
+    print'<input type="text" name="new_category"  style="width: 60%; height: 1.5em;" value="新規カテゴリ名">'
+    print' <p><input type="submit" value="送信" onclick="window.close()"  class="btn"></p></form>'
+
     print "<div id = \"buttom\" align=\"right\" style=\"clear:both;\"></div></form></div>"
     print 'カテゴリの削除：'
     print "\n "
@@ -169,6 +203,9 @@ elsif edit_id.to_s!=""
         print "<div id = \"buttom\" align=\"right\" style=\"clear:both;\">"
       print "<form><INPUT type=\"button\" onClick='history.back();' value=\"戻る\" class=\"btn\">"
       print "</form></div></div></div></body>\n"
+    elsif new_categoryname!=nil
+      #カテゴリ新規作成の場合
+      new_category(new_categoryname)
 end
 print_t('edit_category5.txt')
 db.close

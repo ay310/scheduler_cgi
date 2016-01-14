@@ -19,6 +19,10 @@ def print_t(f_name)
   end
 end
 
+def return_index
+  print '<html>'
+  print '<head><META http-equiv="refresh"; content="0; URL=index.rb"></head><body></body></html>'
+end
 
 # 新規カテゴリ追加時の変数
 new_category = data['new_category'].to_s.toutf8
